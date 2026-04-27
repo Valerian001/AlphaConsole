@@ -284,6 +284,70 @@
             margin-bottom: -10px;
         }
 
+        /* Responsive Media Queries */
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                overflow-y: auto;
+            }
+            .log-panel {
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                padding: 16px;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                border-right: none;
+                border-bottom: 1px solid var(--border-muted);
+            }
+            .sidebar .nav-group {
+                display: none; /* Hide nav group for simplicity in mockup, or could use a hamburger */
+            }
+            .header {
+                padding: 0 16px;
+                height: auto;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+                padding-bottom: 16px;
+                padding-top: 16px;
+            }
+            .btn-create {
+                width: 100%;
+                text-align: center;
+            }
+            .canvas-area {
+                padding: 20px;
+                min-height: 400px;
+            }
+            .task-tree {
+                transform: scale(0.8); /* Scale down tree for mobile */
+                padding: 10px;
+            }
+            .evolution-row {
+                flex-direction: column;
+                gap: 16px;
+            }
+            .fan-out-svg {
+                display: none; /* Simplify connectors for mobile */
+            }
+            .tree-line.mobile-only {
+                display: block;
+                width: 1px;
+                height: 20px;
+                background: var(--border-muted);
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -343,11 +407,13 @@
                             <div class="label">Setup Middleware</div>
                             <div class="status running"><div class="pulse"></div> Processing</div>
                         </div>
+                        <div class="tree-line mobile-only" style="display:none;"></div>
                         <div class="tree-node developer">
                             <div class="icon">D</div>
                             <div class="label">JWT Auth Logic</div>
                             <div class="status">Pending</div>
                         </div>
+                        <div class="tree-line mobile-only" style="display:none;"></div>
                         <div class="tree-node developer">
                             <div class="icon">D</div>
                             <div class="label">DB Session Store</div>

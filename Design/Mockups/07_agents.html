@@ -49,6 +49,17 @@
         .pulse { width: 8px; height: 8px; background: var(--success); border-radius: 50%; }
 
         .btn-manage { padding: 6px 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-muted); border-radius: 6px; color: white; text-decoration: none; font-size: 12px; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            .sidebar { width: 100%; padding: 16px; flex-direction: row; justify-content: space-between; border-right: none; border-bottom: 1px solid var(--border-muted); }
+            .sidebar .nav-group { display: none; }
+            .header { padding: 16px; height: auto; }
+            .content-area { padding: 16px; }
+            .table-container { width: 100%; overflow-x: auto; }
+            .agent-table { min-width: 600px; }
+        }
     </style>
 </head>
 <body>
@@ -73,7 +84,8 @@
 
         <div class="content-area">
             <h1 class="module-title">Agent Fleet</h1>
-            <table class="agent-table">
+            <div class="table-container">
+                <table class="agent-table">
                 <thead>
                     <tr>
                         <th>Agent Identity</th>
@@ -126,6 +138,7 @@
                     </tr>
                 </tbody>
             </table>
+            </div>
         </div>
     </div>
 </body>
