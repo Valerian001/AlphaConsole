@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | AgentOps</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #080808;
+            --surface-elevated: #121212;
+            --cyber-blue: #00A3FF;
+            --cyber-blue-glow: rgba(0, 163, 255, 0.2);
+            --glass-bg: rgba(18, 18, 18, 0.7);
+            --border-muted: rgba(255, 255, 255, 0.05);
+            --text-primary: #FFFFFF;
+            --text-secondary: #A0A0A0;
+            --success: #00E599;
+            --warning: #FFAA00;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-primary);
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--surface-elevated);
+            border-right: 1px solid var(--border-muted);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 20px;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo span { color: var(--cyber-blue); }
+        .logo-icon { width: 24px; height: 24px; background: var(--cyber-blue); border-radius: 6px; box-shadow: 0 0 10px var(--cyber-blue-glow); }
+
+        .nav-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav-item {
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+        }
+
+        .nav-item.active {
+            color: var(--cyber-blue);
+            background: rgba(0, 163, 255, 0.05);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .header {
+            height: 72px;
+            border-bottom: 1px solid var(--border-muted);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+        }
+
+        .btn-create {
+            background: var(--cyber-blue);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 4px 15px var(--cyber-blue-glow);
+            transition: 0.2s;
+        }
+
+        .btn-create:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+        .dashboard-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 24px;
+            padding: 24px;
+            overflow: hidden;
+        }
+
+        /* Workflow Canvas */
+        .canvas-area {
+            background: var(--glass-bg);
+            border-radius: 20px;
+            border: 1px solid var(--border-muted);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .workflow-node {
+            background: var(--surface-elevated);
+            border: 1px solid var(--border-muted);
+            border-radius: 16px;
+            padding: 20px;
+            width: 180px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .workflow-node .icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 163, 255, 0.1);
+            border-radius: 10px;
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--cyber-blue);
+        }
+
+        .workflow-node .status {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--success);
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .pulse {
+            width: 6px;
+            height: 6px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 229, 153, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 229, 153, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 229, 153, 0); }
+        }
+
+        .connector {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, var(--cyber-blue), transparent);
+            width: 100px;
+            z-index: 1;
+        }
+
+        /* Log Stream */
+        .log-panel {
+            background: var(--glass-bg);
+            border-radius: 20px;
+            border: 1px solid var(--border-muted);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .log-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-muted);
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .log-content {
+            flex: 1;
+            padding: 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            line-height: 1.6;
+            overflow-y: auto;
+            color: #d1d1d1;
+        }
+
+        .log-entry .info { color: var(--cyber-blue); }
+        .log-entry .warn { color: var(--warning); }
+        .log-entry .thought { color: #777; font-style: italic; }
+
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <div class="logo-icon"></div>
+            AGENT<span>OPS</span>
+        </div>
+        <div class="nav-group">
+            <a href="#" class="nav-item active">Dashboard</a>
+            <a href="#" class="nav-item">Workflows</a>
+            <a href="#" class="nav-item">Agents</a>
+            <a href="#" class="nav-item">Memory</a>
+            <a href="#" class="nav-item">Settings</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <div class="status-pill">
+                <span style="color: var(--text-secondary); font-size: 13px;">System Status:</span>
+                <span style="color: var(--success); font-size: 13px; font-weight: 600; margin-left: 8px;">Active (80.4 TFLOPS)</span>
+            </div>
+            <a href="03_create_task.html" class="btn-create">+ New Objective</a>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="canvas-area">
+                <div class="workflow-node" style="margin-right: 120px;">
+                    <div class="icon">P</div>
+                    <div style="font-size: 14px; font-weight: 600;">Planner</div>
+                    <div class="status"><div class="pulse"></div> Idle</div>
+                </div>
+                <div class="connector" style="left: 45%;"></div>
+                <div class="workflow-node">
+                    <div class="icon">D</div>
+                    <div style="font-size: 14px; font-weight: 600;">Developer</div>
+                    <div class="status" style="color: var(--cyber-blue);"><div class="pulse" style="background: var(--cyber-blue);"></div> Running</div>
+                </div>
+            </div>
+
+            <div class="log-panel">
+                <div class="log-header">
+                    Live Logs
+                    <span style="color: var(--text-secondary)">v1.1.0</span>
+                </div>
+                <div class="log-content">
+                    <div class="log-entry"><span class="info">[13:52:33 INFO]</span> Starting Developer Agent...</div>
+                    <div class="log-entry"><span class="thought">[13:52:35 THOUGHT]</span> Analyzing repository structure in /src/app...</div>
+                    <div class="log-entry"><span class="info">[13:52:40 INFO]</span> Identified missing component: 'AuthGuard'</div>
+                    <div class="log-entry"><span class="info">[13:52:45 INFO]</span> Generating implementation plan...</div>
+                    <div class="log-entry"><span class="warn">[13:53:10 WARN]</span> High context window usage: 82k tokens</div>
+                    <div class="log-entry"><span class="info">[13:53:15 INFO]</span> Execution sandbox initialized.</div>
+                    <div class="log-entry">> Writing file: src/app/auth/guard.ts...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

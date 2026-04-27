@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Awaiting Approval | AgentOps</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #080808;
+            --surface-elevated: #121212;
+            --cyber-blue: #00A3FF;
+            --cyber-blue-glow: rgba(0, 163, 255, 0.3);
+            --glass-bg: rgba(18, 18, 18, 0.7);
+            --border-muted: rgba(255, 255, 255, 0.05);
+            --text-primary: #FFFFFF;
+            --text-secondary: #A0A0A0;
+            --warning: #FFAA00;
+            --warning-glow: rgba(255, 170, 0, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-primary);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .header {
+            height: 72px;
+            border-bottom: 1px solid var(--border-muted);
+            display: flex;
+            align-items: center;
+            padding: 0 32px;
+            gap: 16px;
+        }
+
+        .status-badge {
+            background: var(--warning-glow);
+            color: var(--warning);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid var(--warning);
+        }
+
+        .container {
+            flex: 1;
+            padding: 32px;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 32px;
+            overflow: hidden;
+        }
+
+        .plan-panel {
+            background: var(--glass-bg);
+            border: 1px solid var(--border-muted);
+            border-radius: 24px;
+            padding: 32px;
+            overflow-y: auto;
+        }
+
+        .plan-panel h1 { font-size: 24px; margin-bottom: 24px; }
+
+        .file-diff {
+            background: #000;
+            border-radius: 12px;
+            padding: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            margin-top: 20px;
+            border: 1px solid #222;
+        }
+
+        .diff-add { color: #00E599; }
+        .diff-sub { color: #FF3B3B; }
+
+        .actions-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .action-card {
+            background: var(--surface-elevated);
+            border: 1px solid var(--border-muted);
+            border-radius: 20px;
+            padding: 24px;
+        }
+
+        .action-card h3 { font-size: 14px; color: var(--text-secondary); margin-bottom: 16px; text-transform: uppercase; }
+
+        .btn-approve {
+            width: 100%;
+            background: var(--cyber-blue);
+            color: white;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            box-shadow: 0 4px 15px var(--cyber-blue-glow);
+            margin-bottom: 12px;
+        }
+
+        .btn-reject {
+            width: 100%;
+            background: rgba(255, 59, 59, 0.1);
+            color: #FF3B3B;
+            border: 1px solid #FF3B3B;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div style="font-weight: 700; font-size: 18px;">Objective: <span style="font-weight: 400; color: var(--text-secondary);">Auth Implementation</span></div>
+        <div class="status-badge">Awaiting Human Review</div>
+    </div>
+
+    <div class="container">
+        <div class="plan-panel">
+            <h1>Proposed Implementation Plan</h1>
+            <p style="color: var(--text-secondary); line-height: 1.6;">
+                The <b>Developer Agent</b> has completed the research phase. It proposes adding a new authentication middleware to secure the <code>/api/internal</code> routes. 
+            </p>
+
+            <div class="file-diff">
+                <div>// src/middleware.ts</div>
+                <div class="diff-sub">- export default function middleware(req) {</div>
+                <div class="diff-add">+ export default async function middleware(req) {</div>
+                <div class="diff-add">+   const session = await getSession(req);</div>
+                <div class="diff-add">+   if (!session && req.url.startsWith('/api/internal')) {</div>
+                <div class="diff-add">+     return new Response('Unauthorized', { status: 401 });</div>
+                <div class="diff-add">+   }</div>
+                <div>    return NextResponse.next();</div>
+                <div>}</div>
+            </div>
+
+            <div style="margin-top: 32px;">
+                <h3 style="font-size: 16px; margin-bottom: 12px;">Agent Reasoning</h3>
+                <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6; font-style: italic;">
+                    "I have identified that internal API routes are currently exposed to public traffic. I am implementing a session-based check using the existing auth library. This change will require a 32MB increase in memory usage during request peak."
+                </p>
+            </div>
+        </div>
+
+        <div class="actions-panel">
+            <div class="action-card">
+                <h3>Decision</h3>
+                <a href="05_completion.html" class="btn-approve">Approve & Execute</a>
+                <a href="02_dashboard.html" class="btn-reject">Reject Plan</a>
+            </div>
+
+            <div class="action-card">
+                <h3>Resource Impact</h3>
+                <div style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px;">
+                    <span>VRAM Usage:</span>
+                    <span style="color: var(--success);">+1.2 GB</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 14px;">
+                    <span>Execution Est:</span>
+                    <span>45 Seconds</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

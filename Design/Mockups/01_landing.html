@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgentOps | Obsidian Flow</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #080808;
+            --surface-elevated: #121212;
+            --cyber-blue: #00A3FF;
+            --cyber-blue-glow: rgba(0, 163, 255, 0.3);
+            --glass-bg: rgba(18, 18, 18, 0.7);
+            --border-muted: rgba(255, 255, 255, 0.05);
+            --text-primary: #FFFFFF;
+            --text-secondary: #A0A0A0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-primary);
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Abstract Background Glows */
+        .glow-1 {
+            position: absolute;
+            top: -10%;
+            left: -10%;
+            width: 50%;
+            height: 50%;
+            background: radial-gradient(circle, rgba(0, 163, 255, 0.08) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        .glow-2 {
+            position: absolute;
+            bottom: -10%;
+            right: -10%;
+            width: 50%;
+            height: 50%;
+            background: radial-gradient(circle, rgba(0, 163, 255, 0.05) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        .landing-container {
+            width: 100%;
+            max-width: 480px;
+            padding: 40px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-muted);
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            text-align: center;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 28px;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .logo span { color: var(--cyber-blue); }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--cyber-blue);
+            border-radius: 8px;
+            box-shadow: 0 0 15px var(--cyber-blue-glow);
+        }
+
+        .tagline {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+
+        .input-group {
+            text-align: left;
+            margin-bottom: 24px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .input-field {
+            width: 100%;
+            background: var(--surface-elevated);
+            border: 1px solid #262626;
+            border-radius: 12px;
+            padding: 14px 16px;
+            color: white;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--cyber-blue);
+            box-shadow: 0 0 10px rgba(0, 163, 255, 0.2);
+        }
+
+        .btn-primary {
+            width: 100%;
+            background: var(--cyber-blue);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px var(--cyber-blue-glow);
+            text-decoration: none;
+            display: block;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--cyber-blue-glow);
+            filter: brightness(1.1);
+        }
+
+        .footer-links {
+            margin-top: 32px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .footer-links a {
+            color: var(--cyber-blue);
+            text-decoration: none;
+        }
+
+        .footer-links a:hover { text-decoration: underline; }
+
+    </style>
+</head>
+<body>
+    <div class="glow-1"></div>
+    <div class="glow-2"></div>
+
+    <div class="landing-container">
+        <div class="logo">
+            <div class="logo-icon"></div>
+            AGENT<span>OPS</span>
+        </div>
+        <p class="tagline">Autonomous Multi-Agent Workflow Engine</p>
+
+        <div class="input-group">
+            <label>API Key / Identity</label>
+            <input type="password" class="input-field" placeholder="Enter your system token..." value="••••••••••••••••">
+        </div>
+
+        <a href="02_dashboard.html" class="btn-primary">Initialize Console</a>
+
+        <div class="footer-links">
+            Don't have an identity? <a href="#">Request access</a>
+        </div>
+    </div>
+</body>
+</html>
