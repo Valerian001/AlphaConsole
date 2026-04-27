@@ -227,12 +227,33 @@
         .log-entry .warn { color: var(--warning); }
         .log-entry .thought { color: #777; font-style: italic; }
 
-        /* Task Tree Styles */
-        .task-tree {
+        /* Agile Canvas Styles */
+        .agile-canvas {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            padding: 40px;
+        }
+
+        .loop-container {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            padding: 40px;
+            gap: 60px;
+            position: relative;
+        }
+
+        .loop-svg {
+            position: absolute;
+            left: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            margin-left: -20px;
+        }
+
+        .execution-fleet {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
         .tree-node {
@@ -240,49 +261,27 @@
             border: 1px solid var(--border-muted);
             border-radius: 12px;
             padding: 12px 16px;
-            min-width: 160px;
+            min-width: 140px;
             text-align: center;
             position: relative;
-        }
-
-        .tree-node.root {
-            background: rgba(255, 255, 255, 0.03);
-            border-style: dashed;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-secondary);
         }
 
         .tree-node .icon {
             width: 24px;
             height: 24px;
-            background: rgba(0, 163, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 6px;
             margin: 0 auto 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 12px;
-            color: var(--cyber-blue);
         }
 
+        .tree-node.active .icon { background: rgba(0, 163, 255, 0.1); color: var(--cyber-blue); }
         .tree-node .label { font-size: 13px; font-weight: 600; }
-        .tree-node .status { font-size: 10px; color: var(--success); margin-top: 4px; }
+        .tree-node .status { font-size: 10px; margin-top: 4px; color: var(--text-secondary); }
         .tree-node .status.running { color: var(--cyber-blue); display: flex; align-items: center; justify-content: center; gap: 4px; }
-
-        .tree-line.main { width: 1px; height: 40px; background: var(--border-muted); }
-
-        .evolution-row {
-            display: flex;
-            gap: 24px;
-            margin-top: 0px;
-        }
-
-        .fan-out-svg {
-            margin-top: -10px;
-            margin-bottom: -10px;
-        }
 
         /* Responsive Media Queries */
         @media (max-width: 1024px) {
@@ -376,50 +375,48 @@
 
         <div class="dashboard-grid">
             <div class="canvas-area">
-                <!-- Task Tree / Evolution View -->
-                <div class="task-tree">
-                    <!-- Root Objective -->
-                    <div class="tree-node root">
-                        <div class="label">Objective: Auth System</div>
-                    </div>
+                <!-- Agile Loop & Dispatch Canvas -->
+                <div class="agile-canvas">
                     
-                    <!-- Vertical Connector -->
-                    <div class="tree-line main"></div>
+                    <!-- Planning Loop -->
+                    <div class="loop-container">
+                        <div class="tree-node planner">
+                            <div class="icon">P</div>
+                            <div class="label">Planner</div>
+                            <div class="status">Refining...</div>
+                        </div>
+                        
+                        <!-- Iterative Loop SVG -->
+                        <svg class="loop-svg" width="100" height="150">
+                            <path d="M0,40 C50,10 50,130 0,100" stroke="var(--cyber-blue)" fill="transparent" stroke-width="2" marker-end="url(#arrow)" />
+                        </svg>
 
-                    <!-- Planner Node -->
-                    <div class="tree-node planner">
-                        <div class="icon">P</div>
-                        <div class="label">Plan Auth Flow</div>
-                        <div class="status">Complete</div>
+                        <div class="tree-node reviewer active">
+                            <div class="icon">R</div>
+                            <div class="label">Reviewer</div>
+                            <div class="status running"><div class="pulse"></div> Critiquing</div>
+                        </div>
                     </div>
 
-                    <!-- Fan-out Connectors -->
-                    <svg class="fan-out-svg" width="600" height="100">
-                        <path d="M300,0 C300,50 100,50 100,100" stroke="var(--cyber-blue)" fill="transparent" stroke-width="2" opacity="0.4" />
-                        <path d="M300,0 C300,50 300,50 300,100" stroke="var(--cyber-blue)" fill="transparent" stroke-width="2" opacity="0.4" />
-                        <path d="M300,0 C300,50 500,50 500,100" stroke="var(--cyber-blue)" fill="transparent" stroke-width="2" opacity="0.4" />
+                    <!-- Dispatch Path -->
+                    <svg class="dispatch-svg" width="200" height="2">
+                        <line x1="0" y1="0" x2="200" y2="0" stroke="var(--border-muted)" stroke-dasharray="5,5" />
                     </svg>
 
-                    <!-- Developer Sub-tasks (Evolution) -->
-                    <div class="evolution-row">
-                        <div class="tree-node developer active">
-                            <div class="icon">D</div>
-                            <div class="label">Setup Middleware</div>
-                            <div class="status running"><div class="pulse"></div> Processing</div>
-                        </div>
-                        <div class="tree-line mobile-only" style="display:none;"></div>
-                        <div class="tree-node developer">
-                            <div class="icon">D</div>
-                            <div class="label">JWT Auth Logic</div>
-                            <div class="status">Pending</div>
-                        </div>
-                        <div class="tree-line mobile-only" style="display:none;"></div>
-                        <div class="tree-node developer">
-                            <div class="icon">D</div>
-                            <div class="label">DB Session Store</div>
-                            <div class="status">Pending</div>
-                        </div>
+                    <!-- Human Gate -->
+                    <div class="tree-node human">
+                        <div class="icon" style="color: var(--warning);">H</div>
+                        <div class="label">Human Gate</div>
+                        <div class="status" style="color: var(--text-secondary);">Awaiting Loop</div>
                     </div>
+
+                    <!-- Final Execution Fan-out (Future State) -->
+                    <div class="execution-fleet" style="opacity: 0.3;">
+                        <div class="tree-node developer"><div class="icon">D</div></div>
+                        <div class="tree-node developer"><div class="icon">D</div></div>
+                        <div class="tree-node tester"><div class="icon">T</div></div>
+                    </div>
+
                 </div>
             </div>
 
