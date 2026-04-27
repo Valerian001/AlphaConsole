@@ -26,7 +26,10 @@ The Dashboard is the central orchestration hub of AlphaConsole, providing real-t
 
 ### 2.2 Global Status Bar
 *   **Infrastructure Health:** Shows connection status to Supabase, NATS, and the active Vast.ai region (e.g., ZA1).
-*   **Performance Metrics:** Real-time TFLOPS and VRAM headroom visualization.
+*   **Performance Metrics:** Real-time VRAM visualization including:
+    *   **Total VRAM:** The hardware limit (e.g., 24GB for RTX 4090).
+    *   **Total Currently in Use:** Sum of VRAM consumed by Ollama, agents, and sidecars.
+    *   **Total Remaining:** Available headroom for new tasks or context expansion.
 
 ---
 
