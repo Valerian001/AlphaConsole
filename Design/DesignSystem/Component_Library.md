@@ -29,11 +29,14 @@ The foundation of the dashboard layout.
 
 ---
 
-## 3. Modals & Overlays
+### 3. Modals & Overlays
+*   **Standard Modal:** Background blur (15px), elevated surface (#121212), and cyber-blue primary actions.
+*   **Asset Preview Modal:** Fixed-position overlay (80% viewport) with a dark glassmorphism aesthetic for viewing project documents and wireframes.
+*   **Intake Center:** Specialized full-screen modal for project-level data entry.
 
-Used for settings, task creation, and human-in-the-loop approvals.
-
-*   **Backdrop:** `rgba(0, 0, 0, 0.8)` with a heavy blur on the background content.
+### 4. Specialized Dash Panels
+*   **Utility Panel:** A tabbed vertical container for high-density information (Logs/Assets) that minimizes horizontal footprint.
+ the background content.
 *   **Container:** Large Glass Card centered on the screen.
 *   **Animation:** Scale-up + Fade-in from center.
 *   **Close Action:** Top-right "X" or clicking outside the container.

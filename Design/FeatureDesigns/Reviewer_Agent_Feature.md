@@ -27,6 +27,10 @@ The Reviewer maintains a "Fleet Capability Matrix":
 *   **Agent Directory:** Knows all active agents and their specializations.
 *   **Load Balancing:** Checks agent health/load before dispatching.
 *   **Security Context:** Ensures executing agents have the correct scope-based permissions for the plan's requirements.
+*   **Repository Validation:** 
+    *   Verifies if a GitHub repository is linked to the project.
+    *   If missing (for new projects), the Reviewer **must** block the dispatch and request the URL from the User via the Human Gate.
+    *   Enforces that the **Planner** only uses cloning/parsing tools and never attempts repo creation.
 
 ---
 

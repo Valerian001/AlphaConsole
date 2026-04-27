@@ -22,6 +22,7 @@ The Workflows module allows users to define the sequence, branching logic, and a
     *   Reviewer critiques and recycles if necessary.
 2.  **Stage 2: Human Oversight (Console)**
     *   Reviewer presents the technical draft to the User.
+    *   **Contextual Referencing:** The User can use indexing IDs (e.g., "See DOC-01") to point the Planner toward specific attached project documents.
     *   User provides comments or approval.
 3.  **Stage 3: Multi-Agent Dispatch (Reviewer-Led)**
     *   Reviewer identifies specialized agents (Developer, Tester).

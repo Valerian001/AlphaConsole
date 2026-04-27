@@ -19,10 +19,11 @@ The Dashboard is the central orchestration hub of AlphaConsole, providing real-t
 
 ## 2. Visual Requirements
 
-### 2.1 The Evolution Canvas
-*   **Dynamic Layout:** An auto-arranging tree graph that expands as agents decompose tasks.
-*   **Interaction:** Clicking a node in the tree focuses the Log Stream on that specific task's output.
-*   **Animations:** Uses the "Data Particle" effect on connectors to show active data transfer between agents.
+### 2.1 The Infinite Evolution Canvas
+*   **Panning & Zooming:** The canvas supports an infinite, coordinate-based workspace, allowing users to move freely across massive agent fleets.
+*   **Dynamic Node Spawning:** As the Reviewer dispatches tasks, new agent nodes materialize on the canvas with real-time status pulses.
+*   **Agent Work Visualization:** Each active node displays a "Mini-Activity" preview (e.g., "Reading /src/utils.ts" or "Running Jest") to provide instant context without opening logs.
+*   **Auto-Layout Engine:** Ensures that complex fanned-out task trees remain readable and organized as the fleet grows.
 
 ### 2.2 Global Status Bar
 *   **Infrastructure Health:** Shows connection status to Supabase, NATS, and the active Vast.ai region (e.g., ZA1).
@@ -43,3 +44,16 @@ The Dashboard is the central orchestration hub of AlphaConsole, providing real-t
 ### 3.2 Human-in-the-Loop Gates
 *   Visual cues (Warning Pulse) when an agent is stuck or awaiting approval.
 *   One-click "Resume" or "Edit & Continue" from the dashboard canvas.
+
+### 3.3 Tabbed Utility Panel (Consolidated Workspace)
+*   **Dual-Purpose Hub:** Merges Live Logs and Project Assets into a single right-hand panel to maximize horizontal canvas space.
+*   **Asset Preview System:** 
+    *   **Modal Overlay:** High-fidelity viewing of project assets (PDF, Images) without navigating away from the dashboard.
+    *   **Context Preservation:** Previewing an asset does not interrupt the Live Log stream or agent orchestration.
+
+### 3.3 Project Asset Management
+*   **Asset Explorer:** A dedicated panel to view all intake files (PDFs, Images) for the current project.
+*   **Lifecycle Control:** 
+    *   **Single Delete:** Remove individual files to prune irrelevant context.
+    *   **Bulk Actions:** Multi-select and delete multiple assets to reset project context.
+    *   **Indexing Sync:** Deleting a file from the dashboard automatically triggers a removal of its semantic chunks from the project's Qdrant collection.

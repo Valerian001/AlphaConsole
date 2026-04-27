@@ -119,7 +119,7 @@
         .dashboard-grid {
             flex: 1;
             display: grid;
-            grid-template-columns: 1fr 350px;
+            grid-template-columns: 1fr 400px; /* Consolidated to 2 columns */
             gap: 24px;
             padding: 24px;
             overflow: hidden;
@@ -128,6 +128,8 @@
         /* Workflow Canvas */
         .canvas-area {
             background: var(--glass-bg);
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0);
+            background-size: 40px 40px; /* Dot grid for infinite canvas feel */
             border-radius: 20px;
             border: 1px solid var(--border-muted);
             position: relative;
@@ -135,7 +137,9 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            cursor: grab;
         }
+        .canvas-area:active { cursor: grabbing; }
 
         .workflow-node {
             background: var(--surface-elevated);
@@ -227,61 +231,191 @@
         .log-entry .warn { color: var(--warning); }
         .log-entry .thought { color: #777; font-style: italic; }
 
-        /* Agile Canvas Styles */
+        /* Orbital Canvas Styles */
         .agile-canvas {
             display: flex;
             align-items: center;
-            gap: 40px;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            position: relative;
             padding: 40px;
         }
 
-        .loop-container {
-            display: flex;
-            flex-direction: column;
-            gap: 60px;
-            position: relative;
-        }
-
-        .loop-svg {
+        .canvas-svg {
             position: absolute;
-            left: 100%;
-            top: 50%;
-            transform: translateY(-50%);
-            margin-left: -20px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
         }
 
-        .execution-fleet {
+        .node-container {
             display: flex;
-            flex-direction: column;
-            gap: 12px;
+            align-items: center;
+            gap: 120px;
+            z-index: 2;
         }
 
         .tree-node {
-            background: var(--surface-elevated);
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
             border: 1px solid var(--border-muted);
-            border-radius: 12px;
-            padding: 12px 16px;
-            min-width: 140px;
+            border-radius: 16px;
+            padding: 20px;
+            min-width: 160px;
             text-align: center;
-            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            transition: 0.3s;
+        }
+
+        .tree-node.active {
+            border-color: var(--cyber-blue);
+            box-shadow: 0 0 20px var(--cyber-blue-glow);
+        }
+
+        .tree-node.waiting {
+            border-color: var(--warning);
+            box-shadow: 0 0 20px var(--warning-glow);
         }
 
         .tree-node .icon {
-            width: 24px;
-            height: 24px;
+            width: 32px;
+            height: 32px;
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 6px;
-            margin: 0 auto 8px;
+            border-radius: 8px;
+            margin: 0 auto 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            font-size: 14px;
+            font-weight: 700;
         }
 
-        .tree-node.active .icon { background: rgba(0, 163, 255, 0.1); color: var(--cyber-blue); }
-        .tree-node .label { font-size: 13px; font-weight: 600; }
-        .tree-node .status { font-size: 10px; margin-top: 4px; color: var(--text-secondary); }
-        .tree-node .status.running { color: var(--cyber-blue); display: flex; align-items: center; justify-content: center; gap: 4px; }
+        .tree-node.active .icon { color: var(--cyber-blue); background: rgba(0, 163, 255, 0.1); }
+        .tree-node.waiting .icon { color: var(--warning); background: var(--warning-glow); }
+
+        .tree-node .label { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+        .tree-node .status { font-size: 11px; color: var(--text-secondary); }
+        .tree-node .activity { 
+            font-size: 9px; 
+            color: var(--cyber-blue); 
+            margin-top: 8px; 
+            font-family: 'JetBrains Mono', monospace;
+            opacity: 0.8;
+        }
+
+        /* Path Animations */
+        .path-line {
+            fill: none;
+            stroke: var(--border-muted);
+            stroke-width: 2;
+            stroke-dasharray: 10, 10;
+        }
+
+        .path-active {
+            fill: none;
+            stroke: var(--cyber-blue);
+            stroke-width: 2;
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            animation: dash 3s linear infinite;
+        }
+
+        @keyframes dash {
+            to { stroke-dashoffset: 0; }
+        }
+
+        .loop-path {
+            fill: none;
+            stroke: var(--cyber-blue);
+            stroke-width: 1.5;
+            opacity: 0.3;
+        }
+
+        /* Consolidated Utility Panel */
+        .utility-panel {
+            background: var(--glass-bg);
+            border-radius: 20px;
+            border: 1px solid var(--border-muted);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .utility-tabs {
+            display: flex;
+            background: rgba(0,0,0,0.2);
+            padding: 4px;
+            border-bottom: 1px solid var(--border-muted);
+        }
+
+        .tab-item {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+
+        .tab-item.active {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+        }
+
+        /* Asset Items with Preview Trigger */
+        .asset-item {
+            cursor: pointer;
+        }
+        .asset-item:hover { background: rgba(0, 163, 255, 0.05); border-color: var(--cyber-blue); }
+
+        /* Preview Modal Overlay */
+        .preview-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            display: none; /* Triggered by JS or Mockup Interaction */
+            align-items: center;
+            justify-content: center;
+        }
+
+        .preview-card {
+            width: 80%;
+            height: 80%;
+            background: var(--surface-elevated);
+            border: 1px solid var(--border-muted);
+            border-radius: 24px;
+            padding: 40px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .preview-content {
+            flex: 1;
+            background: #000;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: auto;
+            color: #555;
+            font-family: 'JetBrains Mono', monospace;
+        }
 
         /* Responsive Media Queries */
         @media (max-width: 1024px) {
@@ -289,7 +423,7 @@
                 grid-template-columns: 1fr;
                 overflow-y: auto;
             }
-            .log-panel {
+            .log-panel, .assets-panel {
                 height: 400px;
             }
         }
@@ -375,56 +509,78 @@
 
         <div class="dashboard-grid">
             <div class="canvas-area">
-                <!-- Agile Loop & Dispatch Canvas -->
                 <div class="agile-canvas">
                     
-                    <!-- Planning Loop -->
-                    <div class="loop-container">
-                        <div class="tree-node planner">
-                            <div class="icon">P</div>
-                            <div class="label">Planner</div>
-                            <div class="status">Refining...</div>
-                        </div>
+                    <!-- Consolidated Orchestration Paths -->
+                    <svg class="canvas-svg" viewBox="0 0 1200 600">
+                        <!-- Planner to Reviewer (Solid Active) -->
+                        <path class="path-line" d="M 180 300 L 360 300" style="stroke: var(--cyber-blue); stroke-width: 2; fill: none;" />
                         
-                        <!-- Iterative Loop SVG -->
-                        <svg class="loop-svg" width="100" height="150">
-                            <path d="M0,40 C50,10 50,130 0,100" stroke="var(--cyber-blue)" fill="transparent" stroke-width="2" marker-end="url(#arrow)" />
-                        </svg>
-
-                        <div class="tree-node reviewer active">
-                            <div class="icon">R</div>
-                            <div class="label">Reviewer</div>
-                            <div class="status running"><div class="pulse"></div> Critiquing</div>
-                        </div>
-                    </div>
-
-                    <!-- Dispatch Path -->
-                    <svg class="dispatch-svg" width="200" height="2">
-                        <line x1="0" y1="0" x2="200" y2="0" stroke="var(--border-muted)" stroke-dasharray="5,5" />
+                        <!-- Reviewer to Human Gate (Dashed Pending) -->
+                        <path class="path-line" d="M 540 300 L 720 300" style="stroke: var(--border-muted); stroke-dasharray: 4; stroke-width: 2; fill: none;" />
+                        
+                        <!-- Reviewer Loopback to Planner (High Arc) -->
+                        <path class="path-line loop-path" d="M 450 250 Q 315 120 180 250" style="stroke: var(--cyber-blue); stroke-dasharray: 4; stroke-width: 1.5; opacity: 0.3; fill: none;" />
+                        
+                        <!-- Human Gate to Spawned Fleet (Fan out) -->
+                        <path class="path-line" d="M 900 300 L 1000 220" style="stroke: var(--cyber-blue); stroke-width: 2; fill: none; opacity: 0.6;" />
+                        <path class="path-line" d="M 900 300 L 1000 380" style="stroke: var(--cyber-blue); stroke-width: 2; fill: none; opacity: 0.6;" />
                     </svg>
 
-                    <!-- Human Gate -->
-                    <div class="tree-node human">
-                        <div class="icon" style="color: var(--warning);">H</div>
-                        <div class="label">Human Gate</div>
-                        <div class="status" style="color: var(--text-secondary);">Awaiting Loop</div>
-                    </div>
+                    <div class="node-container">
+                        <!-- Step 1: Planner -->
+                        <div class="tree-node">
+                            <div class="icon">P</div>
+                            <div class="label">Planner</div>
+                            <div class="status">Idle</div>
+                        </div>
 
-                    <!-- Final Execution Fan-out (Future State) -->
-                    <div class="execution-fleet" style="opacity: 0.3;">
-                        <div class="tree-node developer"><div class="icon">D</div></div>
-                        <div class="tree-node developer"><div class="icon">D</div></div>
-                        <div class="tree-node tester"><div class="icon">T</div></div>
+                        <!-- Step 2: Reviewer (Active Hub) -->
+                        <div class="tree-node active">
+                            <div class="icon">R</div>
+                            <div class="label">Reviewer</div>
+                            <div class="status">Critiquing Iteration #3</div>
+                        </div>
+
+                        <!-- Step 3: Human Gate -->
+                        <div class="tree-node waiting">
+                            <div class="icon">H</div>
+                            <div class="label">Human Gate</div>
+                            <div class="status">Awaiting Loop</div>
+                        </div>
+
+                        <!-- Fanned Out Execution Fleet (The "Space" movement) -->
+                        <div style="display: flex; flex-direction: column; gap: 20px; margin-left: 80px;">
+                            <div class="tree-node active" style="transform: scale(0.9); opacity: 0.8;">
+                                <div class="icon">D</div>
+                                <div class="label">Dev-Alpha</div>
+                                <div class="status">Running</div>
+                                <div class="activity">> Writing /src/auth.ts</div>
+                            </div>
+                            <div class="tree-node active" style="transform: scale(0.9); opacity: 0.8;">
+                                <div class="icon">D</div>
+                                <div class="label">Dev-Beta</div>
+                                <div class="status">Running</div>
+                                <div class="activity">> Parsing DOC-01</div>
+                            </div>
+                            <div class="tree-node" style="transform: scale(0.9); opacity: 0.5;">
+                                <div class="icon">T</div>
+                                <div class="label">Tester-01</div>
+                                <div class="status">Pending</div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
             </div>
 
-            <div class="log-panel">
-                <div class="log-header">
-                    Live Logs
-                    <span style="color: var(--text-secondary)">v1.1.0</span>
+            <div class="utility-panel">
+                <div class="utility-tabs">
+                    <div class="tab-item active">Live Logs</div>
+                    <div class="tab-item">Project Assets</div>
                 </div>
+
+                <!-- Logs Content (Visible by Default) -->
                 <div class="log-content">
                     <div class="log-entry"><span class="info">[13:52:33 INFO]</span> Starting Developer Agent...</div>
                     <div class="log-entry"><span class="thought">[13:52:35 THOUGHT]</span> Analyzing repository structure in /src/app...</div>
@@ -433,6 +589,37 @@
                     <div class="log-entry"><span class="warn">[13:53:10 WARN]</span> High context window usage: 82k tokens</div>
                     <div class="log-entry"><span class="info">[13:53:15 INFO]</span> Execution sandbox initialized.</div>
                     <div class="log-entry">> Writing file: src/app/auth/guard.ts...</div>
+                </div>
+
+                <!-- Assets Content (Hidden in Mockup Tabs) -->
+                <div class="asset-list" style="display: none;">
+                    <div class="asset-item">
+                        <input type="checkbox" class="asset-checkbox">
+                        <div class="asset-info">
+                            <div class="asset-name">technical_spec_v2.pdf</div>
+                            <div class="asset-meta">DOC-01 • 1.2 MB</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preview Modal (Hidden by default) -->
+    <div class="preview-overlay">
+        <div class="preview-card">
+            <div class="preview-header">
+                <div>
+                    <h2 style="font-size: 20px; font-weight: 700;">dashboard_mockup.png</h2>
+                    <span style="font-size: 12px; color: var(--text-secondary);">Project Asset Index: IMG-01</span>
+                </div>
+                <button style="background: none; border: none; color: white; font-size: 24px; cursor: pointer;">×</button>
+            </div>
+            <div class="preview-content">
+                <!-- Mockup Image Preview -->
+                <div style="text-align: center;">
+                    <div style="font-size: 48px; margin-bottom: 20px;">🖼️</div>
+                    <p>Image Preview for IMG-01</p>
                 </div>
             </div>
         </div>

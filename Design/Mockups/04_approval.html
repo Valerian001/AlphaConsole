@@ -219,9 +219,12 @@
                 <h3>Human Feedback Loop</h3>
                 <div class="chat-bubbles">
                     <div class="bubble reviewer">I've reviewed the Planner's corrections. The session logic now accounts for edge cases in sub-routes. Is this ready for dispatch?</div>
+                    <div class="bubble reviewer" style="border-color: var(--warning); background: rgba(255, 171, 0, 0.05);">
+                        <strong>REQUIREMENT:</strong> I detect this is a new project. Please create a GitHub repository and paste the link below so the fleet can establish the codebase.
+                    </div>
                     <!-- User comments would appear here -->
                 </div>
-                <textarea class="comment-input" placeholder="Type your changes or comments for the Planner..."></textarea>
+                <textarea class="comment-input" placeholder="Paste GitHub Repository URL or provide feedback..."></textarea>
                 <div style="font-size: 10px; color: var(--text-secondary); margin-top: 8px;">Comments will recycle the plan back to the Planner for correction.</div>
             </div>
 
