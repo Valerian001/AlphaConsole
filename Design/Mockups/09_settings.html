@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings | AlphaConsole</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #080808;
+            --surface-elevated: #121212;
+            --cyber-blue: #00A3FF;
+            --cyber-blue-glow: rgba(0, 163, 255, 0.2);
+            --glass-bg: rgba(18, 18, 18, 0.7);
+            --border-muted: rgba(255, 255, 255, 0.05);
+            --text-primary: #FFFFFF;
+            --text-secondary: #A0A0A0;
+            --success: #00E599;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body { background-color: var(--bg-deep); color: var(--text-primary); height: 100vh; display: flex; overflow: hidden; }
+
+        .sidebar { width: 280px; background: var(--surface-elevated); border-right: 1px solid var(--border-muted); padding: 24px; display: flex; flex-direction: column; gap: 32px; }
+        .logo { font-weight: 700; font-size: 20px; letter-spacing: -1px; display: flex; align-items: center; gap: 10px; }
+        .logo span { color: var(--cyber-blue); }
+        .logo-icon { width: 24px; height: 24px; background: var(--cyber-blue); border-radius: 6px; box-shadow: 0 0 10px var(--cyber-blue-glow); }
+
+        .nav-group { display: flex; flex-direction: column; gap: 8px; }
+        .nav-item { padding: 12px 16px; border-radius: 10px; font-size: 14px; font-weight: 500; color: var(--text-secondary); text-decoration: none; transition: 0.2s; display: flex; align-items: center; gap: 12px; }
+        .nav-item:hover, .nav-item.active { background: rgba(255, 255, 255, 0.05); color: white; }
+        .nav-item.active { color: var(--cyber-blue); background: rgba(0, 163, 255, 0.05); }
+
+        .main-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        .header { height: 72px; border-bottom: 1px solid var(--border-muted); display: flex; align-items: center; padding: 0 32px; }
+
+        .content-area { flex: 1; padding: 32px; overflow-y: auto; max-width: 800px; margin: 0 auto; width: 100%; }
+        .module-title { font-size: 24px; font-weight: 700; margin-bottom: 40px; }
+
+        .settings-section { margin-bottom: 48px; }
+        .settings-section h2 { font-size: 14px; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 24px; letter-spacing: 1px; }
+
+        .setting-row { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; border-bottom: 1px solid var(--border-muted); }
+        .setting-info h3 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+        .setting-info p { font-size: 13px; color: var(--text-secondary); }
+
+        .input-field { background: var(--surface-elevated); border: 1px solid #262626; border-radius: 8px; padding: 8px 12px; color: white; font-size: 13px; width: 300px; }
+        .status-dot { width: 8px; height: 8px; background: var(--success); border-radius: 50%; margin-right: 8px; display: inline-block; }
+
+        .btn-test { padding: 8px 16px; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-muted); border-radius: 8px; color: white; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <div class="logo-icon"></div>
+            ALPHA<span>CONSOLE</span>
+        </div>
+        <div class="nav-group">
+            <a href="02_dashboard.html" class="nav-item">Dashboard</a>
+            <a href="06_workflows.html" class="nav-item">Workflows</a>
+            <a href="07_agents.html" class="nav-item">Agents</a>
+            <a href="08_memory.html" class="nav-item">Memory</a>
+            <a href="#" class="nav-item active">Settings</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <div class="breadcrumb">AlphaConsole / Settings</div>
+        </div>
+
+        <div class="content-area">
+            <h1 class="module-title">Platform Configuration</h1>
+
+            <div class="settings-section">
+                <h2>Infrastructure Providers</h2>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <h3>Vast.ai Instance Orchestrator</h3>
+                        <p>Status: <span class="status-dot"></span> Connected (ZA1 Region)</p>
+                    </div>
+                    <button class="btn-test">Test Provisioning</button>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <h3>Supabase Master DB</h3>
+                        <p>Status: <span class="status-dot"></span> Connected</p>
+                    </div>
+                    <input type="password" class="input-field" value="••••••••••••••••••••">
+                </div>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <h3>Contabo Object Storage (MinIO)</h3>
+                        <p>Status: <span class="status-dot"></span> Connected</p>
+                    </div>
+                    <input type="text" class="input-field" value="https://s3.contabo.net/alpha-ops">
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h2>Inference & Models</h2>
+                <div class="setting-row">
+                    <div class="setting-info">
+                        <h3>Default LLM Model</h3>
+                        <p>Qwen 3.6 (72B Quantized)</p>
+                    </div>
+                    <select class="input-field">
+                        <option>Qwen 3.6 (72B)</option>
+                        <option>Qwen 3.6 (32B)</option>
+                        <option>Llama 3 (70B)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

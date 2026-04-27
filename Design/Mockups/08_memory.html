@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory | AlphaConsole</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #080808;
+            --surface-elevated: #121212;
+            --cyber-blue: #00A3FF;
+            --cyber-blue-glow: rgba(0, 163, 255, 0.2);
+            --glass-bg: rgba(18, 18, 18, 0.7);
+            --border-muted: rgba(255, 255, 255, 0.05);
+            --text-primary: #FFFFFF;
+            --text-secondary: #A0A0A0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body { background-color: var(--bg-deep); color: var(--text-primary); height: 100vh; display: flex; overflow: hidden; }
+
+        .sidebar { width: 280px; background: var(--surface-elevated); border-right: 1px solid var(--border-muted); padding: 24px; display: flex; flex-direction: column; gap: 32px; }
+        .logo { font-weight: 700; font-size: 20px; letter-spacing: -1px; display: flex; align-items: center; gap: 10px; }
+        .logo span { color: var(--cyber-blue); }
+        .logo-icon { width: 24px; height: 24px; background: var(--cyber-blue); border-radius: 6px; box-shadow: 0 0 10px var(--cyber-blue-glow); }
+
+        .nav-group { display: flex; flex-direction: column; gap: 8px; }
+        .nav-item { padding: 12px 16px; border-radius: 10px; font-size: 14px; font-weight: 500; color: var(--text-secondary); text-decoration: none; transition: 0.2s; display: flex; align-items: center; gap: 12px; }
+        .nav-item:hover, .nav-item.active { background: rgba(255, 255, 255, 0.05); color: white; }
+        .nav-item.active { color: var(--cyber-blue); background: rgba(0, 163, 255, 0.05); }
+
+        .main-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        .header { height: 72px; border-bottom: 1px solid var(--border-muted); display: flex; align-items: center; padding: 0 32px; }
+
+        .content-area { flex: 1; padding: 32px; overflow-y: auto; display: grid; grid-template-columns: 1fr 400px; gap: 32px; }
+        .module-title { font-size: 24px; font-weight: 700; margin-bottom: 32px; }
+
+        .collection-list { background: var(--glass-bg); border: 1px solid var(--border-muted); border-radius: 20px; padding: 24px; }
+        .collection-item { padding: 16px; border-radius: 12px; border: 1px solid var(--border-muted); margin-bottom: 12px; cursor: pointer; transition: 0.2s; }
+        .collection-item:hover { background: rgba(255, 255, 255, 0.03); border-color: var(--cyber-blue); }
+        .collection-item h3 { font-size: 16px; margin-bottom: 4px; }
+        .collection-item p { font-size: 12px; color: var(--text-secondary); }
+
+        .memory-explorer { background: var(--surface-elevated); border-radius: 20px; border: 1px solid var(--border-muted); padding: 24px; }
+        .memory-explorer h2 { font-size: 14px; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 24px; }
+
+        .memory-snippet { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #d1d1d1; background: #000; padding: 12px; border-radius: 8px; margin-bottom: 16px; line-height: 1.5; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <div class="logo-icon"></div>
+            ALPHA<span>CONSOLE</span>
+        </div>
+        <div class="nav-group">
+            <a href="02_dashboard.html" class="nav-item">Dashboard</a>
+            <a href="06_workflows.html" class="nav-item">Workflows</a>
+            <a href="07_agents.html" class="nav-item">Agents</a>
+            <a href="#" class="nav-item active">Memory</a>
+            <a href="09_settings.html" class="nav-item">Settings</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <div class="breadcrumb">AlphaConsole / Memory</div>
+        </div>
+
+        <div class="content-area">
+            <div>
+                <h1 class="module-title">Semantic Context</h1>
+                <div class="collection-list">
+                    <div class="collection-item">
+                        <h3>alpha-core-project</h3>
+                        <p>1,420 Vectors | Updated 4m ago | Qdrant</p>
+                    </div>
+                    <div class="collection-item">
+                        <h3>user-preferences-global</h3>
+                        <p>245 Vectors | Updated 12h ago | Qdrant</p>
+                    </div>
+                    <div class="collection-item">
+                        <h3>documentation-wiki</h3>
+                        <p>12,890 Vectors | Updated 2d ago | Contabo MinIO Snapshot</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="memory-explorer">
+                <h2>Vector Neighbor Explorer</h2>
+                <div class="memory-snippet">
+                    {
+                      "content": "The auth middleware should use JWT tokens stored in cookies with httpOnly flag...",
+                      "id": "mem_0x44a2",
+                      "relevance": 0.984,
+                      "source": "Planner_Reasoning_Step_2"
+                    }
+                </div>
+                <div class="memory-snippet">
+                    {
+                      "content": "Implementation of getSession helper function in /src/lib/auth.ts",
+                      "id": "mem_0x11b9",
+                      "relevance": 0.821,
+                      "source": "Developer_Agent_Output"
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
