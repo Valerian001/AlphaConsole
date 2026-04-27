@@ -10,11 +10,22 @@ The Workflows module allows users to define the sequence, branching logic, and a
 *   **Stage Types:** 
     *   `Linear`: Sequential execution.
     *   `Parallel`: Multiple agents working simultaneously (fan-out).
-    *   `Approval`: HITL gates that pause execution.
+    *   **`Agile-Loop`**: Recursive refinement between Planner and Reviewer agents.
+    *   `Approval`: HITL gates that pause execution for User feedback.
 
 ---
 
-## 2. Visual Requirements
+## 2. The Agile Orchestration Flow
+
+1.  **Stage 1: Planning Loop (Internal)**
+    *   Planner creates a draft.
+    *   Reviewer critiques and recycles if necessary.
+2.  **Stage 2: Human Oversight (Console)**
+    *   Reviewer presents the technical draft to the User.
+    *   User provides comments or approval.
+3.  **Stage 3: Multi-Agent Dispatch (Reviewer-Led)**
+    *   Reviewer identifies specialized agents (Developer, Tester).
+    *   Reviewer monitors parallel execution of sub-tasks.
 *   **Canvas Editor:** A drag-and-drop interface for connecting agent nodes.
 *   **Template Library:** Pre-defined workflows for common tasks (e.g., "Full Stack Feature", "Bug Fix & Test").
 *   **Stage Config:** A side-panel for configuring model quantization and context windows per stage.
