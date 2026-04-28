@@ -8,11 +8,18 @@ This document defines the automated strategy for spinning up, initializing, and 
 
 Instances are provisioned on-demand using the **Vast.ai CLI**.
 
-### 1.1 Instance Selection Criteria
+### 1.1 Instance Selection Criteria (Auto-Filtered)
+The Control Plane filters the Vast.ai marketplace for:
 *   **GPU:** 1x RTX 4090 (24GB VRAM)
 *   **CPU:** > 16 Cores
-*   **RAM:** > 64GB (Prefer 128GB+)
-*   **Image:** `nvidia/cuda:12.1.1-devel-ubuntu22.04` (or custom AgentOps base image)
+*   **RAM:** > 64GB
+*   **Bandwidth:** > 500 Mbps
+*   **Base Image:** `nvidia/cuda:12.1.1-devel-ubuntu22.04` (Enforced for driver compatibility)
+
+### 1.2 Human-in-the-loop Pricing Gate
+Before provisioning, the filtered list is presented to the user.
+1.  **Price Selection:** User chooses the best offer based on $/hr and reliability score.
+2.  **Confirmation:** Selection triggers the automated deployment sequence.
 
 ### 1.2 Provisioning Command (Example)
 ```bash

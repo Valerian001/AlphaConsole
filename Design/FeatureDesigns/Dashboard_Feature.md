@@ -57,3 +57,8 @@ The Dashboard is the central orchestration hub of AlphaConsole, providing real-t
     *   **Single Delete:** Remove individual files to prune irrelevant context.
     *   **Bulk Actions:** Multi-select and delete multiple assets to reset project context.
     *   **Indexing Sync:** Deleting a file from the dashboard automatically triggers a removal of its semantic chunks from the project's Qdrant collection.
+### 3.4 Instance Provisioning Module
+*   **On-Demand Spawning:** The dashboard monitors for an active Vast.ai worker. If missing, it triggers the provisioning flow.
+*   **Marketplace Filtering:** Automatically filters Vast.ai for RTX 4090s with >500Mbps bandwidth and >16 CPU cores.
+*   **Pricing Gate:** Presents a sorted list of matching servers ($/hr). Execution is blocked until the user selects and approves a server cost.
+*   **Deployment Tracking:** Visual progress bar showing instance creation, image pulling, and system bootstrap status.
