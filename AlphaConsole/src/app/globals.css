@@ -1,49 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Obsidian Flow Color Palette */
+  --bg-deep: #0A0A0A;
+  --surface: #121212;
+  --bg-deep: #080808;
+  --surface-elevated: #121212;
+  --surface-highlight: #1A1A1A;
+  --cyber-blue: #00A3FF;
+  --cyber-blue-glow: rgba(0, 163, 255, 0.15);
+  --accent-gold: #FFD700;
+  --success: #00E599;
+  --warning: #FFAA00;
+  --danger: #FF3B3B;
+  --border-muted: #262626;
+  --text-primary: #FFFFFF;
+  --text-secondary: #A0A0A0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    @apply bg-[var(--bg-deep)] text-[var(--text-primary)] overflow-hidden;
+    font-family: var(--font-geist-sans), sans-serif;
+  }
+  
+  code, pre, .font-mono {
+    font-family: var(--font-jetbrains-mono), monospace !important;
   }
 }
 
-html {
-  height: 100%;
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@layer utilities {
+  .mobile-only {
+    @apply flex md:hidden;
+  }
+  .desktop-only {
+    @apply hidden md:flex;
+  }
 }
 
 * {
-  box-sizing: border-box;
-  padding: 0;
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-muted);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(15px);
+  border: 1px solid var(--border-muted);
 }

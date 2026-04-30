@@ -1,0 +1,29 @@
+site_name: AlphaConsole Documentation
+site_description: The technical blueprint and operational guide for AlphaConsole.
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: light blue
+    accent: light blue
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - search.suggest
+    - content.code.copy
+
+nav:
+  - Home: index.md
+  - Architecture (ADR): 
+    - docs/ADR/
+  - Specifications:
+    - docs/Specs/
+  - Designs:
+    - docs/Design/
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
