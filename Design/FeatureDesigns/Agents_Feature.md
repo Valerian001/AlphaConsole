@@ -13,6 +13,7 @@ The Agents module provides a central dashboard for managing the identity, health
 
 ## 2. Visual Requirements
 *   **Agent Grid:** A high-density view of all active agents with their current status "Pulse."
+*   **Initialization Tracker:** Real-time visibility into the "Warm Pool" status and the "Hydration" progress as shells transform into specialized agents.
 *   **Specialization Editor:** Configuring "Expertise" tags and custom system prompts per agent.
 *   **Capability Matrix:** Visualizing which agents have access to which tools (e.g., Terminal, Browser, Git).
 

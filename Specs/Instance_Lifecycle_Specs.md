@@ -40,7 +40,10 @@ Upon start, the `init_system.sh` script executes the following:
     *   `docker-compose up -d`
     *   Verifies health of NATS, Postgres, and Ollama.
 3.  **Model Loading:** Triggers `ollama pull qwen3.6` (or loads from a local cache volume if available).
-4.  **Ready Signal:** Publishes a `worker.ready` message to the NATS backbone to signal availability for tasks.
+4.  **Agent Fleet Initialization (ADR-2026-04-30):**
+    *   Go Runtime spawns a "Warm Pool" of 5 generic Python Agent Shells.
+    *   One shell is specifically "hydrated" as the **Planner** for the initial objective.
+5.  **Ready Signal:** Publishes a `worker.ready` message to the NATS backbone to signal availability for tasks.
 
 ---
 
