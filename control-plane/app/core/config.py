@@ -1,5 +1,6 @@
 from pydantic_settings import BaseSettings
-from typing import Optional
+from pydantic import Field
+from typing import Optional, List
 
 class Settings(BaseSettings):
     VERSION: str = "0.1.0"
@@ -9,14 +10,15 @@ class Settings(BaseSettings):
     DATABASE_URL: str
     
     # NATS
-    NATS_URL: str = "nats://localhost:4222"
+    NATS_URL: str = "nats://nats:4222"
     
     # Vector DB & Object Storage
-    QDRANT_URL: str = "http://localhost:6333"
-    MINIO_ENDPOINT: str = "localhost:9000"
-    OLLAMA_BASE_URL: str = "http://localhost:11434"
+    QDRANT_URL: str = "http://qdrant:6333"
+    MINIO_ENDPOINT: str = "minio:9000"
+    OLLAMA_BASE_URL: str = Field(..., env="OLLAMA_BASE_URL")
     
     # Security
+    ALLOWED_ORIGINS: List[str] = ["*"]
     SECRET_KEY: str = "super-secret-key-change-me"
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7  # 7 days

@@ -40,6 +40,7 @@ All inter-service communication follows this pattern:
 *   `agent.task.status.{id}`: Real-time status updates.
 *   `agent.worker.{type}.exec`: Commands to specific worker pools.
 *   `agent.worker.logs.{id}`: Streaming logs from agents.
+*   `worker.teardown.complete`: Signal sent by runtime before instance destruction.
 
 ### 3.2 WebSocket Sync
 *   **Endpoint:** `/ws/v1/sync`

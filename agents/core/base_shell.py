@@ -34,6 +34,14 @@ class BaseAgentShell:
         """Main execution loop (to be overridden by specific agents)."""
         raise NotImplementedError("Subclasses must implement run()")
 
+    def finish(self, result_data: Dict[str, Any]):
+        """Writes the final result to a JSON file for the Go Runtime to consume."""
+        result_path = f"result_{self.agent_id}.json"
+        with open(result_path, 'w') as f:
+            json.dump(result_data, f)
+        self.log(f"Agent finished. Result written to {result_path}")
+        sys.exit(0)
+
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Usage: python base_shell.py <manifest_path>")

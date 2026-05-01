@@ -1,0 +1,1 @@
+{"agent_id": "test-delta-09", "role": "TESTER", "verification_context": {"verification_objective": "Verify JWT expiration logic"}, "sandbox_config": {"headless_browser": true}}

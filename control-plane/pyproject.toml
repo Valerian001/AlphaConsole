@@ -15,7 +15,9 @@ dependencies = [
     "passlib[bcrypt]",
     "python-multipart",
     "httpx",
-    "websockets"
+    "websockets",
+    "alembic",
+    "asyncpg"
 ]
 
 [tool.poetry]

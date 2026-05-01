@@ -20,21 +20,23 @@ class ReviewerAgent(BaseAgentShell):
         
         if not is_valid:
             self.log("CRITIQUE: Plan violates security constraints. Triggering RECYCLE loop.")
-            # Publish feedback to NATS to restart planning
-            return {"status": "RECYCLE", "feedback": "VRAM allocation exceeds worker limits."}
+            # Emit RECYCLE result for Go supervisor
+            self.finish({
+                "status": "RECYCLE",
+                "feedback": "Architecture violates VRAM constraints. Please optimize memory usage."
+            })
 
         # 3. Handle Human-in-the-Loop Gate
         if self.manifest.get("require_human_approval", True):
             self.log("Plan Validated. Awaiting Human Approval via Dashboard...")
-            # Transition to AWAITING_HUMAN state in DB
-            return {"status": "AWAITING_HUMAN"}
+            self.finish({"status": "AWAITING_HUMAN"})
 
         # 4. Parallel Dispatch (1:1 Task Mapping)
         self.log("Dispatching fleet for parallel execution...")
         tasks = plan.get("milestones", [])
         self._dispatch_tasks(tasks)
         
-        return {"status": "DISPATCHED", "task_count": len(tasks)}
+        self.finish({"status": "SUCCESS", "task_count": len(tasks)})
 
     def _audit_plan(self, plan):
         """Simulates automated critique logic."""
