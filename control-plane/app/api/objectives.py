@@ -25,7 +25,7 @@ async def create_objective(description: str, db: Session = Depends(get_db)):
     db.refresh(new_obj)
     
     # Trigger NATS event for Memory Agent to start intake indexing
-    await nats_service.publish_task("objective.created", {
+    await nats_service.publish_task("agent.task.create", {
         "objective_id": obj_id,
         "description": description
     })
@@ -56,7 +56,7 @@ async def start_planning(obj_id: str, db: Session = Depends(get_db)):
     db.commit()
     
     # Trigger NATS event for Planner Agent
-    await nats_service.publish_task("agent.planner.start", {
+    await nats_service.publish_task("agent.worker.planner.exec", {
         "objective_id": obj_id,
         "context": obj.description
     })

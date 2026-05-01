@@ -12,17 +12,16 @@ class PlannerAgent(BaseAgentShell):
         # 1. Access project context from manifest
         ctx = self.manifest.get("project_context", {})
         obj_desc = ctx.get("description", "No description provided.")
+        feedback = self.manifest.get("previous_feedback")
+        
+        if feedback:
+            self.log(f"REVISION MODE: Addressing feedback -> {feedback}")
         
         self.log(f"Goal: {obj_desc}")
 
         # 2. Simulate Architectural Reasoning
         self.log("Phase A: Ingesting Project Intake assets (PDF/Images)...")
-        time.sleep(3)
-        
-        self.log("Phase B: Comparing requirements against existing codebase...")
-        time.sleep(2)
-        
-        self.log("Phase C: Synthesizing Implementation Plan (ADR)...")
+        time.sleep(1)
         
         # 3. Output Plan
         plan = {
@@ -37,8 +36,7 @@ class PlannerAgent(BaseAgentShell):
         
         self.log(f"Plan Generated: {plan['objective_name']}")
         
-        # Emit final output (this would be sent back to the Go supervisor)
-        return plan
+        self.finish({"status": "SUCCESS", "plan": plan})
 
 if __name__ == "__main__":
     import sys
